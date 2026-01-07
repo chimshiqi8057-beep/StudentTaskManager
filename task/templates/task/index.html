@@ -1,0 +1,17 @@
+<h1>Student Task Manager</h1>
+<table border="1">
+    <tr>
+        <th>Subject</th>
+        <th>Title</th>
+        <th>Priority</th>
+        <th>Deadline</th>
+    </tr>
+    {% for t in tasks %}
+    <tr>
+        <td>{{ t.subject }}</td>
+        <td>{{ t.title }}</td>
+        <td>{{ t.priority }}</td>
+        <td>{{ t.deadline }}</td>
+    </tr>
+    {% endfor %}
+</table>
