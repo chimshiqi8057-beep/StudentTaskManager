@@ -1,18 +1,69 @@
-<h1>Student Task Manager</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Task Manager</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .add-form { background: #f9f9f9; padding: 20px; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 30px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #4CAF50; color: white; }
+        .High { color: red; font-weight: bold; }
+        .Medium { color: orange; }
+        .Low { color: green; }
+    </style>
+</head>
+<body>
 
-<h3>Add New Task</h3>
-<form method="POST" style="margin-bottom: 20px; border: 1px solid #ccc; padding: 15px;">
-    {% csrf_token %} {{ form.as_p }} <button type="submit" style="background-color: green; color: white;">+ Add Task</button>
-</form>
+    <h1>📝 Student Task Manager</h1>
 
-<hr>
+    <div class="add-form">
+        <h3>+ Add New Task</h3>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" style="padding: 10px 20px; background: #4CAF50; color: white; border: none; cursor: pointer;">Add Task</button>
+        </form>
+    </div>
 
-<form method="GET">
-    <input type="text" name="q" placeholder="Search by subject..." value="{{ request.GET.q }}">
-    <button type="submit">Search</button>
-</form>
+    <hr>
 
-<br>
+    <h3>My Tasks</h3>
+    <form method="GET">
+        <input type="text" name="q" placeholder="Search by subject (e.g. Math)..." value="{{ request.GET.q }}" style="padding: 8px; width: 250px;">
+        <button type="submit" style="padding: 8px 15px;">Search</button>
+        <a href="/" style="margin-left: 10px; text-decoration: none; color: #666;">Reset</a>
+    </form>
 
-<table border="1">
+    <table>
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Task Title</th>
+                <th>Priority</th>
+                <th>Deadline</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for t in tasks %}
+            <tr>
+                <td>{{ t.subject }}</td>
+                <td>{{ t.title }}</td>
+                <td class="{{ t.priority }}">{{ t.priority }}</td>
+                <td>{{ t.deadline|date:"Y-m-d H:i" }}</td>
+                <td>
+                    {% if t.is_completed %} ✅ Done {% else %} ⏳ Pending {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" style="text-align: center;">No tasks found. Try adding one!</td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
+
+</body>
+</html>
