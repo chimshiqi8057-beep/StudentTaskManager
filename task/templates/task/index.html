@@ -1,17 +1,18 @@
 <h1>Student Task Manager</h1>
+
+<h3>Add New Task</h3>
+<form method="POST" style="margin-bottom: 20px; border: 1px solid #ccc; padding: 15px;">
+    {% csrf_token %} {{ form.as_p }} <button type="submit" style="background-color: green; color: white;">+ Add Task</button>
+</form>
+
+<hr>
+
+<form method="GET">
+    <input type="text" name="q" placeholder="Search by subject..." value="{{ request.GET.q }}">
+    <button type="submit">Search</button>
+</form>
+
+<br>
+
 <table border="1">
-    <tr>
-        <th>Subject</th>
-        <th>Title</th>
-        <th>Priority</th>
-        <th>Deadline</th>
-    </tr>
-    {% for t in tasks %}
-    <tr>
-        <td>{{ t.subject }}</td>
-        <td>{{ t.title }}</td>
-        <td>{{ t.priority }}</td>
-        <td>{{ t.deadline }}</td>
-    </tr>
-    {% endfor %}
-</table>
+    </table>
